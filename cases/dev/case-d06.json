@@ -1,0 +1,201 @@
+{
+  "id": "case-d06",
+  "split": "dev",
+  "family": "no_fault",
+  "task": "Inspect this synthetic market container and verify all supplied flows. If a measurement defect exists, prepare the smallest correction. Preserve architecture, consent requirements, destinations, and valid purchases. Explain any conflict with historical notes.",
+  "container": {
+    "id": "GTM-SYN-D06",
+    "version": 16,
+    "country": "VX",
+    "architecture": "sequenced",
+    "consent_transport": "preserve",
+    "url_mode": "native",
+    "tags": [
+      {
+        "id": "conversion-d6",
+        "event": "purchase",
+        "destination": "ads",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": true,
+        "firing": "per_event"
+      },
+      {
+        "id": "visit-d6",
+        "event": "page_view",
+        "destination": "ga4",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": true,
+        "firing": "per_event"
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "rollout-d6",
+      "date": "2026-10-25",
+      "status": "current",
+      "text": "The VX container version 16 uses the sequenced architecture. Measurement changes must retain denied-consent behavior and both visit and purchase reporting."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "checkout",
+      "description": "A visitor grants consent and completes one order.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "granted": true
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D6-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "id": "denied",
+      "description": "A visitor declines consent and completes an order.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "granted": false
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D6-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "id": "two_orders",
+      "description": "Two different orders occur without reloading the same page.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "granted": true
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D6-A",
+          "value": 49.5,
+          "currency": "EUR"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-6",
+          "url": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D6-B",
+          "value": 82.0,
+          "currency": "EUR"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "diagnoses": [
+      "no_fault"
+    ],
+    "checks": [
+      {
+        "scenario": "checkout",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 1,
+        "all": {
+          "order_id": "ORDER-D6-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      },
+      {
+        "scenario": "checkout",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 1,
+        "all": {
+          "page_location": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "source": "spring-letter",
+          "medium": "email"
+        }
+      },
+      {
+        "scenario": "denied",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 0,
+        "all": {}
+      },
+      {
+        "scenario": "denied",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 0,
+        "all": {}
+      },
+      {
+        "scenario": "two_orders",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 2,
+        "all": {
+          "currency": "EUR"
+        }
+      },
+      {
+        "scenario": "two_orders",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 1,
+        "all": {
+          "page_location": "https://market-vx-6.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "source": "spring-letter",
+          "medium": "email"
+        }
+      }
+    ],
+    "unchanged_paths": [
+      "/id",
+      "/version",
+      "/country",
+      "/architecture",
+      "/tags/0/id",
+      "/tags/0/destination",
+      "/tags/0/requires_consent"
+    ],
+    "max_patch_ops": 0,
+    "request_human": false
+  }
+}

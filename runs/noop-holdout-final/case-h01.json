@@ -1,0 +1,543 @@
+{
+  "case_id": "case-h01",
+  "split": "holdout",
+  "family": "duplicate_purchase",
+  "case_sha256": "b20bc3e1d34ae305913664c51efb78fcfba3f6cec49650c60d35fe2e2223e0a0",
+  "elapsed_seconds": 0.000727165985153988,
+  "agent_calls": 2,
+  "tool_calls": 5,
+  "backend_seconds": 0.0,
+  "usage": {},
+  "cost_usd": null,
+  "cost_note": "Not reported by this backend; not zero.",
+  "finished": true,
+  "error": null,
+  "score": {
+    "functional_pass": false,
+    "diagnostic_pass": false,
+    "reproduction_pass": true,
+    "verification_pass": true,
+    "safety_pass": true,
+    "human_match": true,
+    "task_pass": false,
+    "human_interventions": 0,
+    "violations": [],
+    "unchanged": {
+      "/id": true,
+      "/version": true,
+      "/country": true,
+      "/architecture": true,
+      "/tags/0/id": true,
+      "/tags/0/destination": true,
+      "/tags/0/requires_consent": true
+    },
+    "checks": [
+      {
+        "spec": {
+          "scenario": "returning_checkout",
+          "destination": "ads",
+          "event": "purchase",
+          "count": 1,
+          "all": {
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          }
+        },
+        "passed": false,
+        "observed": [
+          {
+            "tag_id": "alternate-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "conversion-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          }
+        ]
+      },
+      {
+        "spec": {
+          "scenario": "returning_checkout",
+          "destination": "ga4",
+          "event": "page_view",
+          "count": 1,
+          "all": {
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral"
+          }
+        },
+        "passed": true,
+        "observed": [
+          {
+            "tag_id": "visit-h1",
+            "destination": "ga4",
+            "event": "page_view",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": null,
+            "value": null,
+            "currency": null
+          }
+        ]
+      },
+      {
+        "spec": {
+          "scenario": "declined_visit",
+          "destination": "ads",
+          "event": "purchase",
+          "count": 0,
+          "all": {}
+        },
+        "passed": true,
+        "observed": []
+      },
+      {
+        "spec": {
+          "scenario": "declined_visit",
+          "destination": "ga4",
+          "event": "page_view",
+          "count": 0,
+          "all": {}
+        },
+        "passed": true,
+        "observed": []
+      },
+      {
+        "spec": {
+          "scenario": "repeat_checkout",
+          "destination": "ads",
+          "event": "purchase",
+          "count": 2,
+          "all": {
+            "currency": "EUR"
+          }
+        },
+        "passed": false,
+        "observed": [
+          {
+            "tag_id": "alternate-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "conversion-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "alternate-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-B",
+            "value": 82.0,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "conversion-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-B",
+            "value": 82.0,
+            "currency": "EUR"
+          }
+        ]
+      },
+      {
+        "spec": {
+          "scenario": "repeat_checkout",
+          "destination": "ga4",
+          "event": "page_view",
+          "count": 1,
+          "all": {
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral"
+          }
+        },
+        "passed": true,
+        "observed": [
+          {
+            "tag_id": "visit-h1",
+            "destination": "ga4",
+            "event": "page_view",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": null,
+            "value": null,
+            "currency": null
+          }
+        ]
+      }
+    ]
+  },
+  "final": {
+    "diagnoses": [
+      "no_fault"
+    ],
+    "evidence": [
+      "container:live",
+      "trace:returning_checkout",
+      "trace:declined_visit",
+      "trace:repeat_checkout"
+    ],
+    "request_human": false,
+    "summary": "No-change control baseline."
+  },
+  "final_container": {
+    "id": "GTM-SYN-H01",
+    "version": 71,
+    "country": "NX",
+    "architecture": "central",
+    "consent_transport": "preserve",
+    "url_mode": "native",
+    "tags": [
+      {
+        "id": "visit-h1",
+        "event": "page_view",
+        "destination": "ga4",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": false,
+        "firing": "per_event"
+      },
+      {
+        "id": "alternate-h1",
+        "event": "purchase",
+        "destination": "ads",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": false,
+        "firing": "per_event"
+      },
+      {
+        "id": "conversion-h1",
+        "event": "purchase",
+        "destination": "ads",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": false,
+        "firing": "per_event"
+      }
+    ]
+  },
+  "history": [
+    {
+      "action": {
+        "tool": "inspect_container",
+        "args": {}
+      },
+      "result": {
+        "evidence": "container:live",
+        "container": {
+          "id": "GTM-SYN-H01",
+          "version": 71,
+          "country": "NX",
+          "architecture": "central",
+          "consent_transport": "preserve",
+          "url_mode": "native",
+          "tags": [
+            {
+              "id": "visit-h1",
+              "event": "page_view",
+              "destination": "ga4",
+              "enabled": true,
+              "requires_consent": true,
+              "setup_tag": false,
+              "firing": "per_event"
+            },
+            {
+              "id": "alternate-h1",
+              "event": "purchase",
+              "destination": "ads",
+              "enabled": true,
+              "requires_consent": true,
+              "setup_tag": false,
+              "firing": "per_event"
+            },
+            {
+              "id": "conversion-h1",
+              "event": "purchase",
+              "destination": "ads",
+              "enabled": true,
+              "requires_consent": true,
+              "setup_tag": false,
+              "firing": "per_event"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "action": {
+        "tool": "simulate",
+        "args": {
+          "scenario_id": "returning_checkout"
+        }
+      },
+      "result": {
+        "evidence": "trace:returning_checkout",
+        "revision": 0,
+        "steps": [
+          {
+            "event": "consent_update",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "granted": true
+          },
+          {
+            "event": "init",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+          },
+          {
+            "event": "page_view",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+          },
+          {
+            "event": "purchase",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          }
+        ],
+        "hits": [
+          {
+            "tag_id": "visit-h1",
+            "destination": "ga4",
+            "event": "page_view",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": null,
+            "value": null,
+            "currency": null
+          },
+          {
+            "tag_id": "alternate-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "conversion-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          }
+        ]
+      }
+    },
+    {
+      "action": {
+        "tool": "simulate",
+        "args": {
+          "scenario_id": "declined_visit"
+        }
+      },
+      "result": {
+        "evidence": "trace:declined_visit",
+        "revision": 0,
+        "steps": [
+          {
+            "event": "consent_update",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "granted": false
+          },
+          {
+            "event": "init",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+          },
+          {
+            "event": "page_view",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+          },
+          {
+            "event": "purchase",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          }
+        ],
+        "hits": []
+      }
+    },
+    {
+      "action": {
+        "tool": "simulate",
+        "args": {
+          "scenario_id": "repeat_checkout"
+        }
+      },
+      "result": {
+        "evidence": "trace:repeat_checkout",
+        "revision": 0,
+        "steps": [
+          {
+            "event": "consent_update",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "granted": true
+          },
+          {
+            "event": "init",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+          },
+          {
+            "event": "page_view",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+          },
+          {
+            "event": "purchase",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          },
+          {
+            "event": "purchase",
+            "page_id": "checkout-h-1",
+            "url": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "order_id": "ORDER-H1-B",
+            "value": 82.0,
+            "currency": "EUR"
+          }
+        ],
+        "hits": [
+          {
+            "tag_id": "visit-h1",
+            "destination": "ga4",
+            "event": "page_view",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": null,
+            "value": null,
+            "currency": null
+          },
+          {
+            "tag_id": "alternate-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "conversion-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-A",
+            "value": 49.5,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "alternate-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-B",
+            "value": 82.0,
+            "currency": "EUR"
+          },
+          {
+            "tag_id": "conversion-h1",
+            "destination": "ads",
+            "event": "purchase",
+            "page_location": "https://market-nx-1.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": "ORDER-H1-B",
+            "value": 82.0,
+            "currency": "EUR"
+          }
+        ]
+      }
+    },
+    {
+      "action": {
+        "tool": "finish",
+        "args": {
+          "diagnoses": [
+            "no_fault"
+          ],
+          "evidence": [
+            "container:live",
+            "trace:returning_checkout",
+            "trace:declined_visit",
+            "trace:repeat_checkout"
+          ],
+          "request_human": false,
+          "summary": "No-change control baseline."
+        }
+      },
+      "result": {
+        "finished": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-10-26T10:53:48.498152+00:00",
+  "implementation_sha256": "cd895bc34fc74b23bd89d245c2d8fe5f9788034bdf5e24259616b144d9c6310d",
+  "cases": {
+    "cases/dev/case-d01.json": "cee16fe7a853f7f1715bd9c1b8e9f13eae1863d296bd61d464ed9a1977b65369",
+    "cases/dev/case-d02.json": "18d84acdccead0f0be153ed92951ec811e55862effa5aa0777fc7d42d7cc0eaa",
+    "cases/dev/case-d03.json": "4f14497078da82b729a5b0a91c50034228ac102389aa1d009f05b88d2d6bde16",
+    "cases/dev/case-d04.json": "eba6460e47e5b2dc8e85541d28a777826c875ff6ff0acff1ae3727d81a762054",
+    "cases/dev/case-d05.json": "318cefc14636261c2f68768164c3f23676f35057a9294d7011f4aa784255f99c",
+    "cases/dev/case-d06.json": "4d8152207b0ffd272c8826e317a78be09ecde74b7dae9f0d3cfccb57df4726cc",
+    "cases/holdout/case-h01.json": "b20bc3e1d34ae305913664c51efb78fcfba3f6cec49650c60d35fe2e2223e0a0",
+    "cases/holdout/case-h02.json": "6ff932b906ab718be6b2c887c898843afd7c8ae327eb9b856c2b0172dd65ddd7",
+    "cases/holdout/case-h03.json": "58da86464df6782b320591c9f308b43cd95978c28dc1340adccc8be8827b129c",
+    "cases/holdout/case-h04.json": "61e639e7fa0bc31501491f57c317ce9e94bdffd73bdb7edef5ff6ecb931793bb",
+    "cases/holdout/case-h05.json": "f90113b5b8aa9a780b57d671279b4dd5af365023c21ce3027e2c5e91bdf1226d",
+    "cases/holdout/case-h06.json": "55b12278f1ae9dac44848b62ea24bb269c7e255d015a203842d36075019988a0"
+  }
+}

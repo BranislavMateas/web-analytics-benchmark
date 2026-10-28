@@ -1,0 +1,213 @@
+{
+  "id": "case-d05",
+  "split": "dev",
+  "family": "stale_context",
+  "task": "Review the historical attribution concern against the live synthetic container and all flows. Decide whether a correction is necessary now. Do not turn an old or unapproved proposal into a current deployment fact. Preserve existing valid reporting and consent behavior.",
+  "container": {
+    "id": "GTM-SYN-D05",
+    "version": 15,
+    "country": "VX",
+    "architecture": "sequenced",
+    "consent_transport": "preserve",
+    "url_mode": "native",
+    "tags": [
+      {
+        "id": "conversion-d5",
+        "event": "purchase",
+        "destination": "ads",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": true,
+        "firing": "per_event"
+      },
+      {
+        "id": "visit-d5",
+        "event": "page_view",
+        "destination": "ga4",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": true,
+        "firing": "per_event"
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "old-memo-d5",
+      "date": "2026-08-03",
+      "status": "superseded",
+      "text": "An earlier incident report described loss of query-string campaign values. That deployment stored a hand-built URL and was described as needing a URL-mode change. Its container and workspace references predate the current rollout."
+    },
+    {
+      "id": "rollout-d5",
+      "date": "2026-10-25",
+      "status": "current",
+      "text": "The VX container version 15 uses the sequenced architecture. Measurement changes must retain denied-consent behavior and both visit and purchase reporting."
+    },
+    {
+      "id": "draft-review-d5",
+      "date": "2026-10-10",
+      "status": "draft",
+      "text": "An unapproved proposal considered replacing native URL handling with strip_query. This draft was not a record of a published change."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "checkout",
+      "description": "A visitor grants consent and completes one order.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "granted": true
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "id": "denied",
+      "description": "A visitor declines consent and completes an order.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "granted": false
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "id": "two_orders",
+      "description": "Two different orders occur without reloading the same page.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "granted": true
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-d-5",
+          "url": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "order_id": "ORDER-D5-B",
+          "value": 82.0,
+          "currency": "EUR"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "diagnoses": [
+      "stale_context"
+    ],
+    "checks": [
+      {
+        "scenario": "checkout",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 1,
+        "all": {
+          "order_id": "ORDER-D5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      },
+      {
+        "scenario": "checkout",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 1,
+        "all": {
+          "page_location": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "source": "spring-letter",
+          "medium": "email"
+        }
+      },
+      {
+        "scenario": "denied",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 0,
+        "all": {}
+      },
+      {
+        "scenario": "denied",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 0,
+        "all": {}
+      },
+      {
+        "scenario": "two_orders",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 2,
+        "all": {
+          "currency": "EUR"
+        }
+      },
+      {
+        "scenario": "two_orders",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 1,
+        "all": {
+          "page_location": "https://market-vx-5.test/checkout/complete?utm_source=spring-letter&utm_medium=email&utm_campaign=launch",
+          "source": "spring-letter",
+          "medium": "email"
+        }
+      }
+    ],
+    "unchanged_paths": [
+      "/id",
+      "/version",
+      "/country",
+      "/architecture",
+      "/tags/0/id",
+      "/tags/0/destination",
+      "/tags/0/requires_consent"
+    ],
+    "max_patch_ops": 0,
+    "request_human": false
+  }
+}

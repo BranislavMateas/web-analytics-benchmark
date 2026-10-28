@@ -1,0 +1,171 @@
+{
+  "case_id": "case-h04",
+  "split": "holdout",
+  "family": "setup_mismatch",
+  "case_sha256": "61e639e7fa0bc31501491f57c317ce9e94bdffd73bdb7edef5ff6ecb931793bb",
+  "elapsed_seconds": 120.10506095099845,
+  "agent_calls": 1,
+  "tool_calls": 0,
+  "backend_seconds": 120.10379631398246,
+  "usage": {},
+  "cost_usd": null,
+  "cost_note": "Not reported by this backend; not zero.",
+  "finished": false,
+  "error": "Codex timeout after 120s. ",
+  "score": {
+    "functional_pass": false,
+    "diagnostic_pass": false,
+    "reproduction_pass": false,
+    "verification_pass": false,
+    "safety_pass": true,
+    "human_match": false,
+    "task_pass": false,
+    "human_interventions": 0,
+    "violations": [],
+    "unchanged": {
+      "/id": true,
+      "/version": true,
+      "/country": true,
+      "/architecture": true,
+      "/tags/0/id": true,
+      "/tags/0/destination": true,
+      "/tags/0/requires_consent": true
+    },
+    "checks": [
+      {
+        "spec": {
+          "scenario": "returning_checkout",
+          "destination": "ads",
+          "event": "purchase",
+          "count": 1,
+          "all": {
+            "order_id": "ORDER-H4-A",
+            "value": 49.5,
+            "currency": "EUR"
+          }
+        },
+        "passed": false,
+        "observed": []
+      },
+      {
+        "spec": {
+          "scenario": "returning_checkout",
+          "destination": "ga4",
+          "event": "page_view",
+          "count": 1,
+          "all": {
+            "page_location": "https://market-nx-4.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral"
+          }
+        },
+        "passed": true,
+        "observed": [
+          {
+            "tag_id": "visit-h4",
+            "destination": "ga4",
+            "event": "page_view",
+            "page_location": "https://market-nx-4.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": null,
+            "value": null,
+            "currency": null
+          }
+        ]
+      },
+      {
+        "spec": {
+          "scenario": "declined_visit",
+          "destination": "ads",
+          "event": "purchase",
+          "count": 0,
+          "all": {}
+        },
+        "passed": true,
+        "observed": []
+      },
+      {
+        "spec": {
+          "scenario": "declined_visit",
+          "destination": "ga4",
+          "event": "page_view",
+          "count": 0,
+          "all": {}
+        },
+        "passed": true,
+        "observed": []
+      },
+      {
+        "spec": {
+          "scenario": "repeat_checkout",
+          "destination": "ads",
+          "event": "purchase",
+          "count": 2,
+          "all": {
+            "currency": "EUR"
+          }
+        },
+        "passed": false,
+        "observed": []
+      },
+      {
+        "spec": {
+          "scenario": "repeat_checkout",
+          "destination": "ga4",
+          "event": "page_view",
+          "count": 1,
+          "all": {
+            "page_location": "https://market-nx-4.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral"
+          }
+        },
+        "passed": true,
+        "observed": [
+          {
+            "tag_id": "visit-h4",
+            "destination": "ga4",
+            "event": "page_view",
+            "page_location": "https://market-nx-4.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+            "source": "partner-z",
+            "medium": "referral",
+            "order_id": null,
+            "value": null,
+            "currency": null
+          }
+        ]
+      }
+    ]
+  },
+  "final": null,
+  "final_container": {
+    "id": "GTM-SYN-H04",
+    "version": 74,
+    "country": "NX",
+    "architecture": "central",
+    "consent_transport": "preserve",
+    "url_mode": "native",
+    "tags": [
+      {
+        "id": "visit-h4",
+        "event": "page_view",
+        "destination": "ga4",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": false,
+        "firing": "per_event"
+      },
+      {
+        "id": "conversion-h4",
+        "event": "purchase",
+        "destination": "ads",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": true,
+        "firing": "per_event"
+      }
+    ]
+  },
+  "history": []
+}

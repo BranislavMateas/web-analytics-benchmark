@@ -1,0 +1,228 @@
+{
+  "id": "case-h05",
+  "split": "holdout",
+  "family": "stale_context",
+  "task": "Review the historical attribution concern against the live synthetic container and all flows. Decide whether a correction is necessary now. Do not turn an old or unapproved proposal into a current deployment fact. Preserve existing valid reporting and consent behavior.",
+  "container": {
+    "id": "GTM-SYN-H05",
+    "version": 75,
+    "country": "NX",
+    "architecture": "central",
+    "consent_transport": "preserve",
+    "url_mode": "native",
+    "tags": [
+      {
+        "id": "visit-h5",
+        "event": "page_view",
+        "destination": "ga4",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": false,
+        "firing": "per_event"
+      },
+      {
+        "id": "conversion-h5",
+        "event": "purchase",
+        "destination": "ads",
+        "enabled": true,
+        "requires_consent": true,
+        "setup_tag": false,
+        "firing": "per_event"
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "old-memo-h5",
+      "date": "2026-08-03",
+      "status": "superseded",
+      "text": "An earlier incident report described loss of query-string campaign values. That deployment stored a hand-built URL and was described as needing a URL-mode change. Its container and workspace references predate the current rollout."
+    },
+    {
+      "id": "rollout-h5",
+      "date": "2026-10-25",
+      "status": "current",
+      "text": "The NX container version 75 uses the central architecture. Measurement changes must retain denied-consent behavior and both visit and purchase reporting."
+    },
+    {
+      "id": "draft-review-h5",
+      "date": "2026-10-10",
+      "status": "draft",
+      "text": "An unapproved proposal considered replacing native URL handling with strip_query. This draft was not a record of a published change."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "returning_checkout",
+      "description": "A visitor grants consent and completes one order.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "granted": true
+        },
+        {
+          "event": "init",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "order_id": "ORDER-H5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "id": "declined_visit",
+      "description": "A visitor declines consent and completes an order.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "granted": false
+        },
+        {
+          "event": "init",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "order_id": "ORDER-H5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "id": "repeat_checkout",
+      "description": "Two different orders occur without reloading the same page.",
+      "steps": [
+        {
+          "event": "consent_update",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "granted": true
+        },
+        {
+          "event": "init",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+        },
+        {
+          "event": "page_view",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "order_id": "ORDER-H5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        },
+        {
+          "event": "purchase",
+          "page_id": "checkout-h-5",
+          "url": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "order_id": "ORDER-H5-B",
+          "value": 82.0,
+          "currency": "EUR"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "diagnoses": [
+      "stale_context"
+    ],
+    "checks": [
+      {
+        "scenario": "returning_checkout",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 1,
+        "all": {
+          "order_id": "ORDER-H5-A",
+          "value": 49.5,
+          "currency": "EUR"
+        }
+      },
+      {
+        "scenario": "returning_checkout",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 1,
+        "all": {
+          "page_location": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "source": "partner-z",
+          "medium": "referral"
+        }
+      },
+      {
+        "scenario": "declined_visit",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 0,
+        "all": {}
+      },
+      {
+        "scenario": "declined_visit",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 0,
+        "all": {}
+      },
+      {
+        "scenario": "repeat_checkout",
+        "destination": "ads",
+        "event": "purchase",
+        "count": 2,
+        "all": {
+          "currency": "EUR"
+        }
+      },
+      {
+        "scenario": "repeat_checkout",
+        "destination": "ga4",
+        "event": "page_view",
+        "count": 1,
+        "all": {
+          "page_location": "https://market-nx-5.test/checkout/complete?utm_source=partner-z&utm_medium=referral&utm_campaign=launch",
+          "source": "partner-z",
+          "medium": "referral"
+        }
+      }
+    ],
+    "unchanged_paths": [
+      "/id",
+      "/version",
+      "/country",
+      "/architecture",
+      "/tags/0/id",
+      "/tags/0/destination",
+      "/tags/0/requires_consent"
+    ],
+    "max_patch_ops": 0,
+    "request_human": false
+  }
+}

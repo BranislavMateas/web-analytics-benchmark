@@ -1,0 +1,9 @@
+[project]
+name = "web-analytics-benchmark"
+version = "0.1.0"
+description = "Synthetic measurement-debugging tasks, bounded tools, and objective agent evaluation"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.ruff]
+line-length = 100

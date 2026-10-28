@@ -1,0 +1,47 @@
+{
+  "baseline": "reference",
+  "candidate": "codex",
+  "baseline_label": "scripted control (not a model)",
+  "candidate_label": "real language model",
+  "cases": [
+    {
+      "case_id": "case-h01",
+      "baseline_pass": true,
+      "candidate_pass": true,
+      "change": 0
+    },
+    {
+      "case_id": "case-h02",
+      "baseline_pass": true,
+      "candidate_pass": false,
+      "change": -1
+    },
+    {
+      "case_id": "case-h03",
+      "baseline_pass": true,
+      "candidate_pass": true,
+      "change": 0
+    },
+    {
+      "case_id": "case-h04",
+      "baseline_pass": true,
+      "candidate_pass": false,
+      "change": -1
+    },
+    {
+      "case_id": "case-h05",
+      "baseline_pass": true,
+      "candidate_pass": true,
+      "change": 0
+    },
+    {
+      "case_id": "case-h06",
+      "baseline_pass": true,
+      "candidate_pass": true,
+      "change": 0
+    }
+  ],
+  "improved": 0,
+  "regressed": 2,
+  "note": "Paired descriptive comparison, not a significance test. A scripted control is not a competing language model."
+}

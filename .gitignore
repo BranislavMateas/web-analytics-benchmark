@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+runs/*
+!runs/codex-holdout-v1/
+!runs/noop-holdout-final/
+!runs/reference-holdout-final/
+!runs/noop-vs-codex.json
+!runs/reference-vs-codex.json
